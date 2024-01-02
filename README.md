@@ -1,317 +1,165 @@
-<h1 align="center">nnn - <i>type less, do more, way faster</i></h1>
+<h3 align="center"><img src="misc/logo/logo-128x128.png" alt="nnn"><br>nnn - <i>Supercharge your productivity!</i></h3>
 
 <p align="center">
-<a href="https://github.com/jarun/nnn/releases/latest"><img src="https://img.shields.io/github/release/jarun/nnn.svg?maxAge=600" alt="Latest release" /></a>
-<a href="http://formulae.brew.sh/formula/nnn"><img src="https://img.shields.io/homebrew/v/nnn.svg?maxAge=600" alt="Homebrew" /></a>
-<a href="https://www.archlinux.org/packages/community/x86_64/nnn/"><img src="https://img.shields.io/badge/archlinux-rolling-blue.svg?maxAge=600" alt="Arch Linux" /></a>
-<a href="https://packages.debian.org/search?keywords=nnn&searchon=names&exact=1"><img src="https://img.shields.io/badge/debian-10+-blue.svg?maxAge=2592000" alt="Debian Buster+" /></a>
-<a href="https://apps.fedoraproject.org/packages/nnn"><img src="https://img.shields.io/badge/fedora-27+-blue.svg?maxAge=2592000" alt="Fedora 27+" /></a>
-<a href="https://software.opensuse.org/package/nnn"><img src="https://img.shields.io/badge/opensuse%20leap-15.0+-blue.svg?maxAge=2592000" alt="openSUSE Leap 15.0+" /></a>
-<a href="https://packages.ubuntu.com/search?keywords=nnn&searchon=names&exact=1"><img src="https://img.shields.io/badge/ubuntu-17.10+-blue.svg?maxAge=2592000" alt="Ubuntu Artful+" /></a>
+<a href="https://github.com/jarun/nnn/releases/latest"><img src="https://img.shields.io/github/release/jarun/nnn.svg?maxAge=600&label=rel" alt="Latest release" /></a>
+<a href="https://repology.org/project/nnn/versions"><img src="https://repology.org/badge/tiny-repos/nnn.svg?header=repos" alt="Availability"></a>
+<a href="https://circleci.com/gh/jarun/workflows/nnn"><img src="https://img.shields.io/circleci/project/github/jarun/nnn.svg?label=circle%20ci" alt="CircleCI Status" /></a>
+<a href="https://github.com/jarun/nnn/actions"><img src="https://github.com/jarun/nnn/workflows/ci/badge.svg?branch=master" alt="GitHub CI Status" /></a>
+<a href="https://en.wikipedia.org/wiki/Privacy-invasive_software"><img src="https://img.shields.io/badge/privacy-✓-crimson?maxAge=2592000" alt="Privacy Awareness" /></a>
+<a href="https://github.com/jarun/nnn/blob/master/LICENSE"><img src="https://img.shields.io/badge/©-BSD%202--Clause-important.svg?maxAge=2592000" alt="License" /></a>
 </p>
 
-<p align="center">
-<a href="https://repology.org/metapackage/nnn"><img src="https://repology.org/badge/tiny-repos/nnn.svg" alt="Availability"></a>
-<a href="https://travis-ci.org/jarun/nnn"><img src="https://img.shields.io/travis/jarun/nnn/master.svg?label=travis" alt="Travis Status" /></a>
-<a href="https://circleci.com/gh/jarun/workflows/nnn"><img src="https://img.shields.io/circleci/project/github/jarun/nnn.svg?label=circleci" alt="CircleCI Status" /></a>
-<a href="https://github.com/jarun/nnn/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-BSD%202--Clause-yellow.svg?maxAge=2592000" alt="License" /></a>
-</p>
+<p align="center"><a href="http://i.imgur.com/kOld6HT.gif"><img src="https://i.imgur.com/NUsSA2u.jpg"></a></p>
 
-<p align="center">
-<a href="https://www.youtube.com/watch?v=U2n5aGqou9E"><img src="https://i.imgur.com/onpq3vP.png" /></a>
-</p>
+<h3 align="center">[<a
+href="https://github.com/jarun/nnn#features">Features</a>] [<a
+href="https://github.com/jarun/nnn#quickstart">Quickstart</a>] [<a
+href="https://github.com/jarun/nnn/tree/master/plugins#nnn-plugins">Plugins</a>] [<a
+href="https://github.com/jarun/nnn/wiki">Wiki</a>]</h3>
 
-<p align="center"><i>Modes of nnn (light with filter, detail, du analyzer) with memory usage (click for a demo video)</i></a></p>
+`nnn` (_n³_) is a full-featured terminal file manager. It's tiny, nearly 0-config and [incredibly fast](https://github.com/jarun/nnn/wiki/Performance).
 
-<p align="center">
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RMLTQ76JSXJ4Q"><img src="https://img.shields.io/badge/PayPal-donate-1eb0fc.svg" alt="Donate via PayPal!" /></a>
-</p>
+It is designed to be unobtrusive with smart workflows to match the trains of thought.
 
-## Index
+`nnn` can analyze disk usage, batch rename, launch apps and pick files. The plugin repository has tons of plugins to extend the capabilities further e.g. [live previews](https://github.com/jarun/nnn/wiki/Live-previews), (un)mount disks, find & list, file/dir diff, upload files. A [patch framework](https://github.com/jarun/nnn/tree/master/patches) hosts sizable user-submitted patches which are subjective in nature.
 
-- [Introduction](#introduction)
-- [Features](#features)
-- [Installation](#installation)
-  - [Library dependencies](#library-dependencies)
-  - [Utility dependencies](#utility-dependencies)
-  - [From a package manager](#from-a-package-manager)
-  - [Release packages](#release-packages)
-  - [From source](#from-source)
-  - [Shell completion](#shell-completion)
-- [Usage](#usage)
-  - [Configuration](#configuration)
-  - [Cmdline options](#cmdline-options)
-  - [Keyboard and mouse](#keyboard-and-mouse)
-    - [Leader key](#leader-key)
-  - [Help](#help)
-- [Mentions](#mentions)
-- [Developers](#developers)
+Independent (neo)vim plugins - [nnn.vim](https://github.com/mcchrish/nnn.vim), [vim-floaterm nnn wrapper](https://github.com/voldikss/vim-floaterm#nnn) and [nnn.nvim](https://github.com/luukvbaal/nnn.nvim) (neovim exclusive).
 
-## Introduction
+Runs on the Pi, [Termux](https://www.youtube.com/embed/AbaauM7gUJw) (Android), Linux, macOS, BSD, Haiku, Cygwin, WSL, across DEs or a strictly CLI env.
 
-`nnn` is a full-featured terminal file manager. It's extremely light and fast (**[performance](https://github.com/jarun/nnn/wiki/Performance)**).
-
-`nnn` is also a disk usage analyzer, a fuzzy app launcher, a batch file renamer and a file picker.
-
-It runs smoothly on the Raspberry Pi, Termux on Android ([demo video](https://www.youtube.com/watch?v=AbaauM7gUJw)), Linux, macOS, BSD, Cygwin and Linux subsystem for Windows. `nnn` works seamlessly with DEs and GUI utilities. It's nearly zero-config (with sensible defaults) and can be setup in less than 5 minutes.
-
-**[Plugins](https://github.com/jarun/nnn/tree/master/plugins)** can be run with custom keybinds. There's an independent [(neo)vim plugin](https://github.com/mcchrish/nnn.vim). Custom plugins are easy to add.
-
-Visit the **[Wiki](https://github.com/jarun/nnn/wiki)** for operational concepts, how tos, use cases, chronology and insights.
+[_(there's more)_](https://github.com/jarun/nnn/wiki/Basic-use-cases#the_nnn-magic)
 
 ## Features
 
+- Quality
+  - Privacy-aware (no unconfirmed user data collection)
+  - POSIX-compliant, follows Linux kernel coding style
+  - Highly optimized, static analysis integrated code
+- Frugal
+  - Typically needs less than 3.5MB resident memory
+  - Works with 8 colors (and xterm 256 colors)
+  - Disk-IO sensitive (few disk reads and writes)
+  - No FPU usage (all integer maths, even for file size)
+  - Minimizes screen refresh with fast line redraws
+  - Tiny binary (typically around 100KB)
+  - 1-column mode for smaller terminals and form factors
+  - Hackable - compile in/out features and dependencies
+- Portable
+  - Language-agnostic plugins
+  - Static binary available (no need to install)
+  - Minimal library deps, easy to compile
+  - No config file, minimal config with sensible defaults
+  - Plugin to backup configuration
+  - Widely available on many packagers
+  - Touch enabled, handheld-friendly shortcuts
+  - Unicode support
 - Modes
-  - Detail (default), light
+  - Light (default), detail
   - Disk usage analyzer (block/apparent)
   - File picker, (neo)vim plugin
 - Navigation
-  - *Navigate-as-you-type* with dir auto-select
-  - 4 contexts (_aka_ tabs/workspaces)
-  - Bookmarks; pin and visit a directory
-  - Familiar, easy shortcuts (arrows, <kbd>~</kbd>, <kbd>-</kbd>, <kbd>@</kbd>)
-  - Change directory at exit (*easy* shell integration)
-- Sorting
-  - Ordered pure numeric names by default (visit _/proc_)
-  - Case-insensitive version (_aka_ natural) sort
-  - Sort by file name, modification time, size, file extension
+  - Filter with automatic dir entry on unique match
+  - *Type-to-nav* (turbo navigation/always filter) mode
+  - Contexts (_aka_ tabs/workspaces) with custom colors
+  - Sessions, bookmarks, mark and visit a dir
+  - Remote mounts (needs `sshfs`, `rclone`)
+  - Familiar shortcuts (arrows, <kbd>~</kbd>, <kbd>-</kbd>, <kbd>@</kbd>), quick look-up
+  - `cd` on quit (*easy* shell integration)
+  - Proceed to next file on file open and selection
 - Search
   - Instant filtering with *search-as-you-type*
-  - Regex and substring match
-  - Subtree search to open or edit files (using plugin)
+  - Regex (POSIX/PCRE) and string (default) filters
+  - Subtree search plugin to open or edit files
+- Sort
+  - Ordered pure numeric names by default (visit `/proc`)
+  - Case-insensitive version (_aka_ natural) sort
+  - By name, access/change/mod (default) time, size, extn
+  - Reverse sort
+  - Directory-specific ordering
 - Mimes
-  - Open with desktop opener or specify a custom app
-  - Create, list, extract archives
-  - Option to open all text files in EDITOR
-- Information
-  - Detailed file information
-  - Media information (using plugin)
+  - Preview hovered files in FIFO-based previewer
+  - Open with desktop opener or specify a custom opener
+  - File-specific colors (or minimal _dirs in context color_)
+  - Icons and Emojis support (customize and compile-in)
+  - Plugin for image, video and audio thumbnails
+  - Create, list, extract (to), mount (FUSE based) archives
+  - Option to open all text files in `$EDITOR`
 - Convenience
-  - Minimal configuration
-  - Plugin keybinds
-  - Select files across dirs; all/range selection
-  - Copy, move, delete, archive, link selection
-  - Batch rename selection or dir entries
-  - FreeDesktop compliant trash (needs trash-cli)
-  - SSHFS mounts (needs sshfs)
-  - Create, rename, duplicate files and directories
-  - Per-context directory color (default: blue)
-  - Spawn a shell, run apps, run commands, execute file
-  - Take quick notes, lock terminal (needs a locker)
-  - Shortcut reference a keypress away
-- Unicode support
-- Follows Linux kernel coding style
-- Highly optimized, static analysis integrated code
-- Minimal library dependencies
-- Widely available
+  - Detailed file stats and mime information
+  - Run plugins and custom commands with hotkeys
+  - FreeDesktop compliant trash utility integration
+  - Cross-dir file/all/range selection
+  - Create (with parents), rename, duplicate files and dirs
+  - Create new file or directory (tree) on startup
+  - Batch renamer for selection or dir
+  - List input stream of file paths from stdin or plugin
+  - Copy (as), move (as), delete, archive, link selection
+  - Dir updates, notification on `cp`, `mv`, `rm` completion
+  - Copy file paths to system clipboard on select
+  - Launch apps, run commands, spawn a shell, toggle exe
+  - Access context paths/files at prompt or spawned shell
+  - Lock terminal after configurable idle timeout
+  - Capture and show output of a program in help screen
+  - Basic support for screen readers and braille displays
 
-## Installation
+## Quickstart
 
-#### Library dependencies
+1. [Install](https://github.com/jarun/nnn/wiki/Usage) `nnn` and the dependencies you need.
+2. The desktop opener is default. Use `-e` to open text files in the terminal. Optionally [open detached](https://github.com/jarun/nnn/wiki/Basic-use-cases#detached-text).
+3. Configure [`cd` on quit](https://github.com/jarun/nnn/wiki/Basic-use-cases#configure-cd-on-quit).
+4. [Sync subshell `$PWD`](https://github.com/jarun/nnn/wiki/Basic-use-cases#sync-subshell-pwd) to `nnn`.
+5. [Install plugins](https://github.com/jarun/nnn/tree/master/plugins#installation).
+6. Use `-x` to sync selection to clipboard, show notis on `cp`, `mv`, `rm` and set xterm title.
+7. For a CLI-only environment, set [`NNN_OPENER`](https://github.com/jarun/nnn/wiki/Usage#configuration) to [`nuke`](https://github.com/jarun/nnn/blob/master/plugins/nuke). Use option `-c`.
+8. Bid `ls` goodbye! `alias ls='nnn -de'` :sunglasses:
+9. Visit the [Live previews](https://github.com/jarun/nnn/wiki/Live-previews) and [Troubleshooting](https://github.com/jarun/nnn/wiki/Troubleshooting) Wiki pages.
 
-`nnn` needs a curses library with wide character support (like ncursesw), libreadline and standard libc. It's possible to drop libreadline using the Makefile target `norl`.
+Don't memorize! Arrows, <kbd>/</kbd>, <kbd>q</kbd> suffice. <kbd>Tab</kbd> creates and/or cycles contexts. <kbd>?</kbd> lists shortcuts.
 
-#### Utility dependencies
+[![](https://i.imgur.com/TN3xYQz.jpg)](https://www.youtube.com/embed/-knZwdd1ScU)
 
-| Dependency | Installation | Operation |
-| --- | --- | --- |
-| xdg-open (Linux), open(1) (macOS), cygstart (Cygwin) | base | desktop opener |
-| file, coreutils (cp, mv, rm), findutils (xargs) | base | file type, copy, move and remove |
-| tar, (un)zip [atool/bsdtar for more formats] | base | create, list, extract tar, gzip, bzip2, zip |
-| sshfs, fusermount(3) | if needed | mount, unmount over SSHFS |
-| trash-cli | optional | trash files (default action: delete) |
-| vlock (Linux), bashlock (macOS), lock(1) (BSD) | optional | terminal locker (fallback: [cmatrix](https://github.com/abishekvashok/cmatrix)) |
-| advcpmv (Linux) ([integration](https://github.com/jarun/nnn/wiki/Advanced-use-cases#show-cp-mv-progress)) | optional | copy, move progress |
-| `$VISUAL` (else `$EDITOR`), `$PAGER`, `$SHELL` | optional | fallback vi, less, sh |
+[![Wiki](https://img.shields.io/badge/RTFM-nnn%20Wiki-important?maxAge=2592000)](https://github.com/jarun/nnn/wiki)
 
-#### From a package manager
+## Videos
 
-`nnn` may be available in the default repos of your distro already. Find a list of known packagers below.
+- [nnn file manager on Termux (Android)](https://www.youtube.com/embed/AbaauM7gUJw)
+- [NNN File Manager](https://www.youtube.com/embed/1QXU4XSqXNo)
+- [This Week in Linux 114 - TuxDigital](https://www.youtube.com/watch?v=5W9ja0DQjSY&t=2059s)
+- [nnn file manager basics - Linux](https://www.youtube.com/embed/il2Fm-KJJfM)
+- [I'M GOING TO USE THE NNN FILE BROWSER! 😮](https://www.youtube.com/embed/U2n5aGqou9E)
+- [NNN: Is This Terminal File Manager As Good As People Say?](https://www.youtube.com/embed/KuJHo-aO_FA)
+- [nnn - A File Manager (By Uoou, again.)](https://www.youtube.com/embed/cnzuzcCPYsk)
 
-<details><summary>Expand</summary>
-<p>
-<br>
-● <a href="https://pkgs.alpinelinux.org/packages?name=nnn">Alpine Linux</a> (<code>apk add nnn</code>)<br>
-● <a href="https://www.archlinux.org/packages/community/x86_64/nnn/">Arch Linux</a> (<code>pacman -S nnn</code>)<br>
-● CentOS (<code>yum --enablerepo=epel install nnn</code>)<br>
-● <a href="https://crux.nu/portdb/?a=search&q=nnn">CRUX</a> (<code>prt-get depinst nnn</code>)<br>
-● <a href="https://packages.debian.org/search?keywords=nnn&searchon=names&exact=1">Debian</a> (<code>apt-get install nnn</code>)<br>
-● <a href="https://github.com/DragonFlyBSD/DPorts/tree/master/misc/nnn">DPorts</a> (<code>pkg install nnn</code>)<br>
-● <a href="https://apps.fedoraproject.org/packages/nnn">Fedora</a> (<code>dnf install nnn</code>)<br>
-● <a href="https://svnweb.freebsd.org/ports/head/misc/nnn/">FreeBDS</a> (<code>pkg install nnn</code>)<br>
-● <a href="https://packages.gentoo.org/packages/app-misc/nnn">Gentoo</a> (<code>emerge nnn</code>)<br>
-● <a href="http://formulae.brew.sh/formula/nnn">macOS/Homebrew</a> (<code>brew install nnn</code>)<br>
-● <a href="https://www.macports.org/ports.php?by=name&substr=nnn">MacPorts</a> (<code>port install nnn</code>)<br>
-● <a href="https://notabug.org/milislinux/milis/src/master/talimatname/genel/n/nnn/talimat">Milis Linux</a> (<code>mps kur nnn</code>)<br>
-● <a href="https://github.com/NixOS/nixpkgs/tree/master/pkgs/applications/misc/nnn">nixpkgs</a> (<code>nix-env -i nnn</code>)<br>
-● <a href="https://www.nutyx.org/en/?type=pkg&branch=rolling&arch=x86_64&searchpkg=nnn">NuTyX</a> (<code>cards install nnn</code>)<br>
-● <a href="https://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/sysutils/nnn/">OpenBSD</a> (<code>pkg_add nnn</code>)<br>
-● <a href="https://software.opensuse.org/package/nnn">openSUSE (and packages for several other distros)</a> (<code>zypper in nnn</code>)<br>
-● <a href="http://pkgsrc.se/sysutils/nnn">pkgsrc</a> (<code>pkg_add nnn</code>)<br>
-● <a href="https://archive.raspbian.org/raspbian/pool/main/n/nnn/">Raspbian Testing</a> (<code>apt-get install nnn</code>)<br>
-● <a href="http://slackbuilds.org/repository/14.2/system/nnn/">Slackware</a> (<code>slackpkg install nnn</code>)<br>
-● <a href="http://cook.slitaz.org/index.cgi?pkg=nnn">SliTaz Cooking</a> (<code>cooker pkg nnn</code>)<br>
-● <a href="https://packages.getsol.us/shannon/n/nnn/">Solus</a> (<code>eopkg install nnn</code>)<br>
-● <a href="http://codex.sourcemage.org/test/shell-term-fm/nnn/">Source Mage</a> (<code>cast nnn</code>)<br>
-● <a href="https://github.com/termux/termux-packages/tree/master/packages/nnn">Termux</a> (<code>pkg in nnn</code>)<br>
-● <a href="https://packages.ubuntu.com/search?keywords=nnn&searchon=names&exact=1">Ubuntu</a> (<code>apt-get install nnn</code>)<br>
-● <a href="https://github.com/void-linux/void-packages/tree/master/srcpkgs/nnn">Void Linux</a> (<code>xbps-install -S nnn</code>)<br>
-</p>
-</details>
+## Elsewhere
 
-#### Release packages
-
-Packages for Arch Linux, CentOS, Debian, Fedora and Ubuntu are available with the [latest stable release](https://github.com/jarun/nnn/releases/latest).
-
-#### From source
-
-To cook yourself, download the [latest stable release](https://github.com/jarun/nnn/releases/latest) or clone this repository (*risky*). Then install the dependencies and compile (e.g. on Ubuntu 16.04):
-
-    $ sudo apt-get install pkg-config libncursesw5-dev libreadline6-dev
-    $ make
-    $ sudo make strip install
-
-`PREFIX` is supported, in case you want to install to a different location.
-
-- Compilation notes on [Raspberry Pi](https://github.com/jarun/nnn/wiki/Developer-guides#compile-for-pi)
-- Instructions for [Cygwin](https://github.com/jarun/nnn/wiki/Developer-guides#compile-on-cygwin)
-
-#### Shell completion
-
-Option completion scripts for Bash, Fish and Zsh can be found in respective subdirectories of [`misc/auto-completion/`](misc/auto-completion). Please refer to your shell's manual for installation instructions.
-
-## Usage
-
-#### Configuration
-
-`nnn` supports the following environment variables for configuration. All of them are optional (set if you need). There is no config file. Associated files are stored under `${XDG_CONFIG_HOME:-$HOME/.config}/nnn/`.
-
-| Example `export` | Description |
-| --- | --- |
-| `NNN_BMS='d:~/Documents;D:~/Docs archive/'` | key-bookmark pairs [max 10] |
-| `NNN_PLUG='o:fzy-open;p:mocplay;m:nmount;t:thumb'` | key-plugin pairs (<kbd>x-key</kbd> to run) [max 10] |
-| `NNN_USE_EDITOR=1` | open text files in `$VISUAL` (else `$EDITOR`, fallback vi) |
-| `NNN_CONTEXT_COLORS='1234'` | specify per context color [default: '4444' (all blue)] |
-| `NNN_SSHFS_OPTS='sshfs -o reconnect,idmap=user'` | specify SSHFS options |
-| `NNN_NOTE='/home/user/Dropbox/notes'` | absolute path to note file [default: none] |
-| `NNN_OPENER=mimeopen` | custom file opener |
-| `NNN_IDLE_TIMEOUT=300` | idle seconds to lock terminal [default: disabled] |
-| `NNN_COPIER=copier` | clipboard copier script [default: none] |
-| `NNN_TRASH=1` | trash files to the desktop Trash [default: delete] |
-
-#### Cmdline options
-
-```
-usage: nnn [-b key] [-d] [-H] [-i] [-n] [-o] [-p file]
-           [-r] [-s] [-S] [-t] [-v] [-h] [PATH]
-
-The missing terminal file manager for X.
-
-positional args:
-  PATH   start dir [default: current dir]
-
-optional args:
- -b key  open bookmark key
- -d      detail mode
- -H      show hidden files
- -i      nav-as-you-type mode
- -n      version sort
- -o      press Enter to open files
- -p file selection file (stdout if '-')
- -r      show cp, mv progress on Linux
- -s      string filters [default: regex]
- -S      du mode
- -t      disable dir auto-select
- -v      show version
- -h      show help
-```
-
-#### Keyboard and mouse
-
-Press <kbd>?</kbd> in `nnn` to see the list anytime.
-
-```
- NAVIGATION
-          ↑ k  Up          PgUp ^U  Scroll up
-          ↓ j  Down        PgDn ^D  Scroll down
-          ← h  Parent dir  ~ ` @ -  HOME, /, start, last
-        ↵ → l  Open file/dir     .  Toggle show hidden
-         g ^A  First entry    G ^E  Last entry
-            b  Pin current dir  ^B  Go to pinned dir
-       Tab ^I  Next context      d  Toggle detail view
-         , ^/  Lead key    N LeadN  Context N
-            /  Filter/Lead  Ins ^T  Toggle nav-as-you-type
-          Esc  Exit prompt   ^L F5  Redraw/clear prompt
-            q  Quit context  Lead'  First file
-         Q ^Q  Quit  ^G  QuitCD  ?  Help, config
- FILES
-           ^O  Open with...      n  Create new/link
-            D  File detail   ^R F2  Rename/duplicate
-     ⎵ ^K / Y  Select entry/all  r  Batch rename
-         K ^Y  Toggle selection  y  List selection
-            P  Copy selection    X  Delete selection
-            V  Move selection   ^X  Delete entry
-            f  Create archive    C  Execute entry
-           ^F  Extract archive   F  List archive
-            e  Edit in EDITOR    p  Open in PAGER
- ORDER TOGGLES
-           ^J  du                S  Apparent du
-            s  Size    E  Extn   t  Time modified
- MISC
-         ! ^]  Shell   ^N  Note  L  Lock
-         R ^V  Pick plugin  F12 xK  Run plugin key K
-            c  SSHFS mount       u  Unmount
-           ^P  Prompt            =  Launcher
-```
-
-Note: Help & settings, file details and archive listing are shown in the PAGER. Use the PAGER-specific keys in these screens.
-
-| Mouse click | Function |
-|---| --- |
-| Left single on context number | Visit context |
-| Left single on top row after context numbers | Visit parent |
-| Left single/double on last 2 rows | Toggle nav-as-you-type |
-| Left single | Select context or entry |
-| Left double | Select context or open entry |
-
-##### Leader key
-
-The Leader/Lead key provides a powerful multi-functional navigation mechanism. It is case-sensitive and understands contexts, bookmarks and location shortcuts.
-
-| Key | Function |
-|:---:| --- |
-| <kbd>1-4</kbd> | Go to/create selected context |
-| <kbd>]</kbd> | Go to next active context |
-| <kbd>[</kbd> | Go to previous active context |
-| key | Go to bookmarked location |
-| <kbd>'</kbd> | Go to first file in directory |
-| <kbd>~</kbd> <kbd>`</kbd> <kbd>@</kbd> <kbd>-</kbd> | Go to HOME, `/`, start, last visited dir |
-| <kbd>.</kbd> | Toggle show hidden files |
-| <kbd>q</kbd> | Quit context |
-
-When the filter is on, <kbd>/</kbd> works as an additional Leader key.
-
-#### Help
-
-    $ nnn -h
-    $ man nnn
-To lookup keyboard shortcuts at runtime, press <kbd>?</kbd>.
-
-## Mentions
-
+- [AddictiveTips](https://www.addictivetips.com/ubuntu-linux-tips/navigate-linux-filesystem/)
+- [ArchWiki](https://wiki.archlinux.org/index.php/Nnn)
 - [FOSSMint](https://www.fossmint.com/nnn-linux-terminal-file-browser/)
-- [Hacker News 1](https://news.ycombinator.com/item?id=18520898)
-- [Hacker News 2](https://news.ycombinator.com/item?id=19850656)
+- [gHacks Tech News](https://www.ghacks.net/2019/11/01/nnn-is-an-excellent-command-line-based-file-manager-for-linux-macos-and-bsds/)
+- Hacker News [[1](https://news.ycombinator.com/item?id=18520898)] [[2](https://news.ycombinator.com/item?id=19850656)]
 - [It's FOSS](https://itsfoss.com/nnn-file-browser-linux/)
-- [LinuxLinks1](https://www.linuxlinks.com/nnn-fast-and-flexible-file-manager/)
-- [LinuxLinks2](https://www.linuxlinks.com/bestconsolefilemanagers/)
+- [Linux Format Issue 265; Manage files with nnn](https://linuxformat.com/archives?issue=265)
+- LinuxLinks [[1](https://www.linuxlinks.com/nnn-fast-and-flexible-file-manager/)] [[2](https://www.linuxlinks.com/bestconsolefilemanagers/)] [[3](https://www.linuxlinks.com/excellent-system-tools-nnn-portable-terminal-file-manager/)]
+- [Linux Magazine; FOSSPicks](https://www.linux-magazine.com/Issues/2017/205/FOSSPicks/(offset)/15)
+- [Make Tech Easier](https://www.maketecheasier.com/nnn-file-manager-terminal/)
+- [Opensource.com](https://opensource.com/article/22/12/linux-file-manager-nnn)
+- [Open Source For You](https://www.opensourceforu.com/2019/12/nnn-this-feature-rich-terminal-file-manager-will-enhance-your-productivity/)
+- [PCLinuxOS Magazine Issue June 2021](https://pclosmag.com/html/Issues/202106/page08.html)
 - [Suckless Rocks](https://suckless.org/rocks/)
-- [Ubuntu Full Circle Magazine - Issue 135](https://fullcirclemagazine.org/issue-135/)
+- [Ubuntu Full Circle Magazine Issue 135; Review: nnn](https://fullcirclemagazine.org/issue-135/)
+- [Using and Administering Linux: Volume 2: Zero to SysAdmin: Advanced Topics](https://books.google.com/books?id=MqjDDwAAQBAJ&pg=PA32)
+- [Wikipedia](https://en.wikipedia.org/wiki/Nnn_(file_manager))
 
 ## Developers
 
-1. Copyright © 2014-2016 Lazaros Koromilas
-2. Copyright © 2014-2016 Dimitris Papastamos
-3. Copyright © 2016-2019 [Arun Prakash Jana](https://github.com/jarun)
+- [Arun Prakash Jana](https://github.com/jarun) (Copyright © 2016-2023)
+- [0xACE](https://github.com/0xACE)
+- [Anna Arad](https://github.com/annagrram)
+- [KlzXS](https://github.com/KlzXS)
+- [Léo Villeveygoux](https://github.com/leovilok)
+- [Luuk van Baal](https://github.com/luukvbaal)
+- [NRK](https://codeberg.org/NRK)
+- [Sijmen J. Mulder](https://github.com/sjmulder)
+- and other contributors
 
-Contributions are welcome. Please visit the [ToDo list](https://github.com/jarun/nnn/issues/324).
+Visit the [Tracker](https://github.com/jarun/nnn/issues/1546) thread for a list of features in progress and anything up for grabs. Feel free to [discuss](https://github.com/jarun/nnn/discussions) new ideas or enhancement requests.

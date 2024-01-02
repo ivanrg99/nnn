@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2014-2016, Lazaros Koromilas <lostd@2f30.org>
  * Copyright (C) 2014-2016, Dimitris Papastamos <sin@2f30.org>
- * Copyright (C) 2016-2019, Arun Prakash Jana <engineerarun@gmail.com>
+ * Copyright (C) 2016-2023, Arun Prakash Jana <engineerarun@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@
 
 #pragma once
 
-#ifdef DBGMODE
+#ifdef DEBUG
 static int DEBUG_FD;
 
 static int xprintf(int fd, const char *fmt, ...)
@@ -41,7 +41,7 @@ static int xprintf(int fd, const char *fmt, ...)
 
 	va_start(ap, fmt);
 	r = vsnprintf(buf, sizeof(buf), fmt, ap);
-	if (r > 0)
+	if (r > 0 && (unsigned int)r < sizeof(buf))
 		r = write(fd, buf, r);
 	va_end(ap);
 	return r;
@@ -76,13 +76,16 @@ static void disabledbg(void)
 	close(DEBUG_FD);
 }
 
-#define DPRINTF_D(x) xprintf(DEBUG_FD, #x "=%d\n", x)
-#define DPRINTF_U(x) xprintf(DEBUG_FD, #x "=%u\n", x)
-#define DPRINTF_S(x) xprintf(DEBUG_FD, #x "=%s\n", x)
-#define DPRINTF_P(x) xprintf(DEBUG_FD, #x "=%p\n", x)
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
+
+#define DPRINTF_D(x) xprintf(DEBUG_FD, "ln " TOSTRING(__LINE__) ": " #x "=%d\n", x)
+#define DPRINTF_U(x) xprintf(DEBUG_FD, "ln " TOSTRING(__LINE__) ": " #x "=%u\n", x)
+#define DPRINTF_S(x) xprintf(DEBUG_FD, "ln " TOSTRING(__LINE__) ": " #x "=%s\n", x)
+#define DPRINTF_P(x) xprintf(DEBUG_FD, "ln " TOSTRING(__LINE__) ": " #x "=%p\n", x)
 #else
 #define DPRINTF_D(x)
 #define DPRINTF_U(x)
 #define DPRINTF_S(x)
 #define DPRINTF_P(x)
-#endif /* DBGMODE */
+#endif /* DEBUG */

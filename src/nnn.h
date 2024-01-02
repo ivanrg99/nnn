@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2014-2016, Lazaros Koromilas <lostd@2f30.org>
  * Copyright (C) 2014-2016, Dimitris Papastamos <sin@2f30.org>
- * Copyright (C) 2016-2019, Arun Prakash Jana <engineerarun@gmail.com>
+ * Copyright (C) 2016-2023, Arun Prakash Jana <engineerarun@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,13 +31,22 @@
 #pragma once
 
 #include <curses.h>
+#include <wchar.h>
 
-#define CONTROL(c) ((c) ^ 0x40)
+#define CONTROL(c) ((c) & 0x1f)
+
+#ifndef ESC
+#define ESC (27)
+#endif
+
+#ifndef DEL
+#define DEL (127)
+#endif
 
 /* Supported actions */
 enum action {
 	SEL_BACK = 1,
-	SEL_GOIN,
+	SEL_OPEN,
 	SEL_NAV_IN,
 	SEL_NEXT,
 	SEL_PREV,
@@ -47,66 +56,76 @@ enum action {
 	SEL_CTRL_U,
 	SEL_HOME,
 	SEL_END,
+	SEL_FIRST,
+	SEL_JUMP,
+	SEL_YOUNG,
 	SEL_CDHOME,
 	SEL_CDBEGIN,
 	SEL_CDLAST,
 	SEL_CDROOT,
-	SEL_VISIT,
-	SEL_LEADER,
+	SEL_BMOPEN,
+	SEL_REMOTE,
 	SEL_CYCLE,
+	SEL_CYCLER,
 	SEL_CTX1,
 	SEL_CTX2,
 	SEL_CTX3,
 	SEL_CTX4,
-	SEL_PIN,
+#ifdef CTX8
+	SEL_CTX5,
+	SEL_CTX6,
+	SEL_CTX7,
+	SEL_CTX8,
+#endif
+	SEL_MARK,
+	SEL_BMARK,
 	SEL_FLTR,
 	SEL_MFLTR,
-	SEL_TOGGLEDOT,
+	SEL_HIDDEN,
 	SEL_DETAIL,
 	SEL_STATS,
+	SEL_CHMODX,
 	SEL_ARCHIVE,
-	SEL_ARCHIVELS,
-	SEL_EXTRACT,
-	SEL_FSIZE,  /* file size */
-	SEL_ASIZE,  /* apparent size */
-	SEL_BSIZE,  /* block size */
-	SEL_EXTN,   /* order by extension */
-	SEL_MTIME,
+	SEL_SORT,
 	SEL_REDRAW,
 	SEL_SEL,
 	SEL_SELMUL,
 	SEL_SELALL,
-	SEL_SELLST,
+	SEL_SELINV,
+	SEL_SELEDIT,
 	SEL_CP,
 	SEL_MV,
-	SEL_RMMUL,
+	SEL_CPMVAS,
 	SEL_RM,
 	SEL_OPENWITH,
 	SEL_NEW,
 	SEL_RENAME,
-	SEL_RENAMEALL,
-	SEL_SSHFS,
+	SEL_RENAMEMUL,
 	SEL_UMOUNT,
 	SEL_HELP,
-	SEL_EXEC,
-	SEL_SHELL,
-	SEL_PLUGKEY,
+	SEL_AUTONEXT,
+	SEL_EDIT,
 	SEL_PLUGIN,
+	SEL_SELSIZE,
+	SEL_SHELL,
 	SEL_LAUNCH,
-	SEL_RUNCMD,
-	SEL_RUNEDIT,
-	SEL_RUNPAGE,
-	SEL_NOTE,
+	SEL_PROMPT,
 	SEL_LOCK,
+	SEL_SESSIONS,
+	SEL_EXPORT,
+	SEL_TIMETYPE,
 	SEL_QUITCTX,
 	SEL_QUITCD,
 	SEL_QUIT,
+	SEL_QUITERR,
+#ifndef NOMOUSE
 	SEL_CLICK,
+#endif
 };
 
 /* Associate a pressed key to an action */
 struct key {
-	int sym;         /* Key pressed */
+	wint_t sym;      /* Key pressed */
 	enum action act; /* Action */
 };
 
@@ -115,8 +134,8 @@ static struct key bindings[] = {
 	{ KEY_LEFT,       SEL_BACK },
 	{ 'h',            SEL_BACK },
 	/* Inside or select */
-	{ KEY_ENTER,      SEL_GOIN },
-	{ '\r',           SEL_GOIN },
+	{ KEY_ENTER,      SEL_OPEN },
+	{ '\r',           SEL_OPEN },
 	/* Pure navigate inside */
 	{ KEY_RIGHT,      SEL_NAV_IN },
 	{ 'l',            SEL_NAV_IN },
@@ -142,6 +161,11 @@ static struct key bindings[] = {
 	{ KEY_END,        SEL_END },
 	{ 'G',            SEL_END },
 	{ CONTROL('E'),   SEL_END },
+	/* Go to first file */
+	{ '\'',           SEL_FIRST },
+	/* Jump to an entry number/offset */
+	{ 'J',            SEL_JUMP },
+	{ CONTROL('Y'),   SEL_YOUNG },
 	/* HOME */
 	{ '~',            SEL_CDHOME },
 	/* Initial directory */
@@ -150,112 +174,118 @@ static struct key bindings[] = {
 	{ '-',            SEL_CDLAST },
 	/* Go to / */
 	{ '`',            SEL_CDROOT },
-	/* Visit marked directory */
-	{ CONTROL('B'),   SEL_VISIT },
 	/* Leader key */
-	{ CONTROL('_'),   SEL_LEADER },
-	{ ',',            SEL_LEADER },
+	{ 'b',            SEL_BMOPEN },
+	{ CONTROL('_'),   SEL_BMOPEN },
+	/* Connect to server over SSHFS */
+	{ 'c',            SEL_REMOTE },
 	/* Cycle contexts in forward direction */
 	{ '\t',           SEL_CYCLE },
-	{ CONTROL('I'),   SEL_CYCLE },
+	/* Cycle contexts in reverse direction */
+	{ KEY_BTAB,       SEL_CYCLER },
 	/* Go to/create context N */
 	{ '1',            SEL_CTX1 },
 	{ '2',            SEL_CTX2 },
 	{ '3',            SEL_CTX3 },
 	{ '4',            SEL_CTX4 },
+#ifdef CTX8
+	{ '5',            SEL_CTX5 },
+	{ '6',            SEL_CTX6 },
+	{ '7',            SEL_CTX7 },
+	{ '8',            SEL_CTX8 },
+#endif
 	/* Mark a path to visit later */
-	{ 'b',            SEL_PIN },
+	{ ',',            SEL_MARK },
+	/* Create a bookmark */
+	{ 'B',            SEL_BMARK },
 	/* Filter */
 	{ '/',            SEL_FLTR },
 	/* Toggle filter mode */
-	{ KEY_IC,         SEL_MFLTR },
-	{ CONTROL('T'),   SEL_MFLTR },
+	{ CONTROL('N'),   SEL_MFLTR },
 	/* Toggle hide .dot files */
-	{ '.',            SEL_TOGGLEDOT },
+	{ '.',            SEL_HIDDEN },
 	/* Detailed listing */
 	{ 'd',            SEL_DETAIL },
 	/* File details */
-	{ 'D',            SEL_STATS },
+	{ 'f',            SEL_STATS },
+	{ CONTROL('F'),   SEL_STATS },
+	/* Toggle executable status */
+	{ '*',            SEL_CHMODX },
 	/* Create archive */
-	{ 'f',            SEL_ARCHIVE },
-	/* List archive */
-	{ 'F',            SEL_ARCHIVELS },
-	/* Extract archive */
-	{ CONTROL('F'),   SEL_EXTRACT },
-	/* Toggle sort by size */
-	{ 's',            SEL_FSIZE },
-	/* Sort by apparent size including dir contents */
-	{ 'S',            SEL_ASIZE },
-	/* Sort by total block count including dir contents */
-	{ CONTROL('J'),   SEL_BSIZE },
-	/* Sort by file extension */
-	{ 'E',            SEL_EXTN },
-	/* Toggle sort by time */
-	{ 't',            SEL_MTIME },
+	{ 'z',            SEL_ARCHIVE },
+	/* Sort toggles */
+	{ 't',            SEL_SORT },
+	{ CONTROL('T'),   SEL_SORT },
 	/* Redraw window */
 	{ CONTROL('L'),   SEL_REDRAW },
-	{ KEY_F(5),       SEL_REDRAW },
-	/* Copy currently selected file path */
-	{ CONTROL('K'),   SEL_SEL },
+	/* Select current file path */
 	{ ' ',            SEL_SEL },
-	/* Toggle copy multiple file paths */
-	{ 'K',            SEL_SELMUL },
-	{ CONTROL('Y'),   SEL_SELMUL },
+	{ '+',            SEL_SEL },
+	/* Toggle select multiple files */
+	{ 'm',            SEL_SELMUL },
 	/* Select all files in current dir */
-	{ 'Y',            SEL_SELALL },
-	/* Show list of copied files */
-	{ 'y',            SEL_SELLST },
-	/* Copy from copy buffer */
-	{ 'P',            SEL_CP },
-	/* Move from copy buffer */
-	{ 'V',            SEL_MV },
-	/* Delete from copy buffer */
-	{ 'X',            SEL_RMMUL },
-	/* Delete currently selected */
+	{ 'a',            SEL_SELALL },
+	/* Invert selection in current dir */
+	{ 'A',            SEL_SELINV },
+	/* List, edit selection */
+	{ 'E',            SEL_SELEDIT },
+	/* Copy from selection buffer */
+	{ 'p',            SEL_CP },
+	{ CONTROL('P'),   SEL_CP },
+	/* Move from selection buffer */
+	{ 'v',            SEL_MV },
+	{ CONTROL('V'),   SEL_MV },
+	/* Copy/move from selection buffer and rename */
+	{ 'w',            SEL_CPMVAS },
+	{ CONTROL('W'),   SEL_CPMVAS },
+	/* Delete from selection buffer */
+	{ 'x',            SEL_RM },
 	{ CONTROL('X'),   SEL_RM },
 	/* Open in a custom application */
+	{ 'o',            SEL_OPENWITH },
 	{ CONTROL('O'),   SEL_OPENWITH },
 	/* Create a new file */
 	{ 'n',            SEL_NEW },
 	/* Show rename prompt */
 	{ CONTROL('R'),   SEL_RENAME },
-	{ KEY_F(2),       SEL_RENAME },
 	/* Rename contents of current dir */
-	{ 'r',            SEL_RENAMEALL },
-	/* Connect to server over SSHFS */
-	{ 'c',            SEL_SSHFS },
+	{ 'r',            SEL_RENAMEMUL },
 	/* Disconnect a SSHFS mount point */
 	{ 'u',            SEL_UMOUNT },
 	/* Show help */
 	{ '?',            SEL_HELP },
-	/* Execute file */
-	{ 'C',            SEL_EXEC },
+	/* Toggle auto-advance on file open */
+	{ CONTROL('J'),   SEL_AUTONEXT },
+	/* Edit in EDITOR */
+	{ 'e',            SEL_EDIT },
+	/* Run a plugin */
+	{ ';',            SEL_PLUGIN },
+	/* Show total size of listed selection */
+	{ 'S',            SEL_SELSIZE },
 	/* Run command */
 	{ '!',            SEL_SHELL },
 	{ CONTROL(']'),   SEL_SHELL },
-	/* Plugin key */
-	{ 'x',            SEL_PLUGKEY },
-	{ KEY_F(12),      SEL_PLUGKEY },
-	/* Run a plugin */
-	{ 'R',            SEL_PLUGIN },
-	{ CONTROL('V'),   SEL_PLUGIN },
 	/* Launcher */
 	{ '=',            SEL_LAUNCH },
-	/* Run a command */
-	{ CONTROL('P'),   SEL_RUNCMD },
-	/* Open in EDITOR or PAGER */
-	{ 'e',            SEL_RUNEDIT },
-	{ 'p',            SEL_RUNPAGE },
-	/* Open notes file */
-	{ CONTROL('N'),   SEL_NOTE },
+	/* Show command prompt */
+	{ ']',            SEL_PROMPT },
 	/* Lock screen */
-	{ 'L',            SEL_LOCK },
+	{ '0',            SEL_LOCK },
+	/* Manage sessions */
+	{ 's',            SEL_SESSIONS },
+	/* Export list */
+	{ '>',            SEL_EXPORT },
+	/* Set time type */
+	{ 'T',            SEL_TIMETYPE },
 	/* Quit a context */
 	{ 'q',            SEL_QUITCTX },
 	/* Change dir on quit */
 	{ CONTROL('G'),   SEL_QUITCD },
 	/* Quit */
-	{ 'Q',            SEL_QUIT },
 	{ CONTROL('Q'),   SEL_QUIT },
+	/* Quit with an error code */
+	{ 'Q',            SEL_QUITERR },
+#ifndef NOMOUSE
 	{ KEY_MOUSE,      SEL_CLICK },
+#endif
 };

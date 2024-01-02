@@ -8,12 +8,12 @@
 # Shell: POSIX compliant
 # Authors: Arun Prakash Jana, ath3
 
-selection=${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection
+selection=${NNN_SEL:-${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection}
 resp=s
 
 if [ -s "$selection" ]; then
-    echo -n "press 's' (split current file) or 'j' (join selection): "
-    read resp
+    printf "press 's' (split current file) or 'j' (join selection): "
+    read -r resp
 fi
 
 if [ "$resp" = "j" ]; then
@@ -26,19 +26,24 @@ if [ "$resp" = "j" ]; then
         for entry in $arr
         do
             if [ -d "$entry" ]; then
-                echo "cant join directories"
+                echo "can't join directories"
                 exit
             fi
         done
 
         file="$(basename "$(echo "$arr" | sed -n '1p' | sed -e 's/[0-9][0-9]$//')")"
         sort -z < "$selection" | xargs -0 -I{} cat {} > "${file}.out"
+
+        # Clear selection
+        if [ -p "$NNN_PIPE" ]; then
+            printf "-" > "$NNN_PIPE"
+        fi
     fi
 elif [ "$resp" = "s" ]; then
     if [ -n "$1" ] && [ -f "$1" ]; then
         # a single file is passed
-        echo -n "split size in MB: "
-        read size
+        printf "split size in MB: "
+        read -r size
 
         if [ -n "$size" ]; then
             split -d -b "$size"M "$1" "$1"

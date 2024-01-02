@@ -3,34 +3,24 @@ version: 2
 jobs:
   compile:
     docker:
-      - image: ubuntu:18.04
+      - image: ubuntu:22.04
         working_directory: ~/nnn
         environment:
           CI_FORCE_TEST: 1
+    parallelism: 4
     steps:
       - run:
           command: |
             apt update -qq
-            apt install -y --no-install-recommends software-properties-common wget gpg-agent
-            apt-add-repository -y ppa:jonathonf/gcc-9.1
-            wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|apt-key add -
-            apt-add-repository -y "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-8 main"
-            apt update -qq
-            apt install -y --no-install-recommends git gcc gcc-8 gcc-9 clang clang-8 clang-tidy-8 make pkg-config libncursesw5-dev libreadline-dev
+            DEBIAN_FRONTEND="noninteractive" TZ="America/New_York" apt-get -y install tzdata
+            apt install -y --no-install-recommends software-properties-common wget gpg-agent shellcheck
+            apt install -y --no-install-recommends git make pkg-config libncurses-dev libreadline-dev
+            apt install -y --no-install-recommends gcc-9 gcc-10 gcc-11 gcc-12
+            apt install -y --no-install-recommends clang-11 clang-12 clang-13 clang-14 clang-15 clang-tidy-15
       - checkout
       - run:
           command: |
             export CFLAGS=-Werror
-            make clean
-            echo
-            echo "########## gcc ##########"
-            CC=gcc make strip
-            ls -l nnn
-            make clean
-            echo
-            echo "########## gcc-8 ##########"
-            CC=gcc-8 make strip
-            ls -l nnn
             make clean
             echo
             echo "########## gcc-9 ##########"
@@ -38,18 +28,45 @@ jobs:
             ls -l nnn
             make clean
             echo
-            echo "########## clang ##########"
-            CC=clang make strip
+            echo "########## gcc-10 ##########"
+            CC=gcc-10 make strip
             ls -l nnn
             make clean
             echo
-            echo "########## clang-8 ##########"
-            CC=clang-8 make strip
+            echo "########## gcc-11 ##########"
+            CC=gcc-11 make strip
             ls -l nnn
             make clean
             echo
-            echo "########## clang-tidy-8 ##########"
-            clang-tidy-8 src/* -- -I/usr/include -I/usr/include/ncursesw
+            echo "########## gcc-12 ##########"
+            CC=gcc-12 make strip
+            ls -l nnn
+            make clean
+            echo
+            echo "########## clang-11 ##########"
+            CC=clang-11 make strip
+            ls -l nnn
+            make clean
+            echo
+            echo "########## clang-12 ##########"
+            CC=clang-12 make strip
+            ls -l nnn
+            make clean
+            echo
+            echo "########## clang-13 ##########"
+            CC=clang-13 make strip
+            ls -l nnn
+            make clean
+            echo
+            echo "########## clang-14 ##########"
+            CC=clang-14 make strip
+            ls -l nnn
+            make clean
+            echo
+            echo "########## clang-tidy-15 ##########"
+            clang-tidy-15 src/* -- -I/usr/include -I/usr/include/ncursesw
+            echo "########## shellcheck ##########"
+            find plugins/ -type f ! \( -name "*.md" -o -name "*-mac" \) -exec shellcheck {} +
 
   package-and-publish:
     machine: true
@@ -57,32 +74,31 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "package with packagecore"
+          name: "auto-generate packages"
           command: |
+            # Create dist directory if it doesn't exist
+            mkdir ./dist
             # Clean up
-            rm -rf ./.git
             rm -rf ./dist/*
             # Pack source
-            cd ..
-            tar -czf ${CIRCLE_PROJECT_REPONAME}-${CIRCLE_TAG}.tar.gz ${CIRCLE_PROJECT_REPONAME}
-            cd ${CIRCLE_PROJECT_REPONAME}
+            git archive -o ../${CIRCLE_PROJECT_REPONAME}-${CIRCLE_TAG}.tar.gz --format tar.gz --prefix=${CIRCLE_PROJECT_REPONAME}-${CIRCLE_TAG#v}/ ${CIRCLE_TAG}
             # Use latest installed python3 from pyenv
             export PYENV_VERSION="$(pyenv versions | grep -Po '\b3\.\d+\.\d+' | tail -1)"
-            pip install packagecore
-            packagecore -o ./dist/ ${CIRCLE_TAG#v}
+            #pip install packagecore
+            #packagecore -c misc/packagecore/packagecore.yaml -o ./dist/ ${CIRCLE_TAG#v}
             # Move source pack to dist
-            mv ../${CIRCLE_PROJECT_REPONAME}-${CIRCLE_TAG}.tar.gz dist/
+            mv ../${CIRCLE_PROJECT_REPONAME}-${CIRCLE_TAG}.tar.gz ./dist/
 
       - run:
           name: "publish to GitHub"
           command: |
-            go get github.com/tcnksm/ghr
+            go install github.com/tcnksm/ghr@latest
             ghr -t ${GITHUB_API_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -replace ${CIRCLE_TAG} ./dist/
 
 workflows:
   version: 2
 
-  test:
+  CircleCI:
     jobs: &all-tests
       - compile
 
