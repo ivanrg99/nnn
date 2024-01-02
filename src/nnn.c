@@ -558,7 +558,7 @@ static char * const utils[] = {
 #elif defined __HAIKU__
 	"open",
 #else
-	"mimeopen",
+	"opn",
 #endif
 	"atool",
 	"bsdtar",
